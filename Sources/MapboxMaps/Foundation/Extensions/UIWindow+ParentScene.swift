@@ -25,14 +25,16 @@ extension UIScene {
             return [carPlayScene.carWindow]
         } else if #available(iOS 13.4, *), let carPlayDashboardScene = self as? CPTemplateApplicationDashboardScene {
             return [carPlayDashboardScene.dashboardWindow]
-        } else if #available(iOS 15.4, *), let carPlayInstrumentClusterScene = self as? CPTemplateApplicationInstrumentClusterScene {
+        } 
+        #if swift(>=5.6)
+        if #available(iOS 15.4, *), let carPlayInstrumentClusterScene = self as? CPTemplateApplicationInstrumentClusterScene {
             if let instrumentClusterWindow = carPlayInstrumentClusterScene.instrumentClusterController.instrumentClusterWindow {
                 return [instrumentClusterWindow]
             } else {
                 return []
             }
         }
-
+        #endif
         Log.info(forMessage: "Found no window attached to the current scene: \(self)")
         return []
     }
